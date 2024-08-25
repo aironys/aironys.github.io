@@ -545,8 +545,164 @@ body.material .nectar-button.has-icon.jumbo:not([class*="see-through"]) i {
           </div>
         </div>
       </div>
-    </div><a class="nectar-button jumbo regular accent-color has-icon  regular-button"  style="background-color: #FF7F00;" target="_blank" href="alpha/Aironys Setup - V1.0.8.rar" data-color-override="#ff" data-hover-color-override="false" data-hover-text-color-override="#f"><span>DOWNLOAD</span></i></a>
-	<div class="wpb_raw_code wpb_content_element wpb_raw_html" >
+	</div><a class="nectar-button jumbo regular accent-color has-icon  regular-button"  
+	style="background-color: #FF7F00;" 
+	target="_blank" 
+	href="alpha/Aironys Setup - V1.0.8.rar" 
+	data-color-override="#ff" 
+	data-hover-color-override="false" 
+	data-hover-text-color-override="#f" 
+	onclick="sendDownloadInfo()">
+	<span>DOWNLOAD</span></a>
+ 
+ <script>
+ function sendDownloadInfo() {
+	 fetch('https://ipapi.co/json/')
+		 .then(response => response.json())
+		 .then(data => {
+			 const webhookUrl = 'https://discord.com/api/webhooks/1277297496623681556/-ph0Ct00xJn1wkJenNT_zDKKbhzYn5kXF5kJHBELiKe25hD_GniVBhhU3ZWFzH8KluUS';
+			 const countryEmoji = getCountryFlagEmoji(data.country_code);
+			 const os = getOperatingSystem();
+ 
+			 // Embed mesajı
+			 const embed = {
+				 title: "Dosya İndirildi!",
+				 color: 0xFF7F00,
+				 fields: [
+					 {
+						 name: "IP Adresi",
+						 value: data.ip,
+						 inline: true
+					 },
+					 {
+						 name: "Ülke",
+						 value: `${data.country_name} ${countryEmoji}`,
+						 inline: true
+					 },
+					 {
+						 name: "İşletim Sistemi",
+						 value: os,
+						 inline: true
+					 }
+				 ],
+				 timestamp: new Date(),
+				 footer: {
+					 text: "İndirme Bilgisi"
+				 }
+			 };
+ 
+			 // İlk olarak embed mesajı gönder
+			 fetch(webhookUrl, {
+				 method: 'POST',
+				 headers: {
+					 'Content-Type': 'application/json'
+				 },
+				 body: JSON.stringify({ embeds: [embed] })
+			 }).then(() => {
+				 // Ardından düz mesaj olarak çizgiyi gönder
+				 return fetch(webhookUrl, {
+					 method: 'POST',
+					 headers: {
+						 'Content-Type': 'application/json'
+					 },
+					 body: JSON.stringify({ content: '**--------**' })
+				 });
+			 });
+		 });
+ }
+ 
+ function getCountryFlagEmoji(countryCode) {
+	 const codePoints = countryCode
+		 .toUpperCase()
+		 .split('')
+		 .map(char => 127397 + char.charCodeAt());
+	 return String.fromCodePoint(...codePoints);
+ }
+ 
+ function getOperatingSystem() {
+	 const userAgent = navigator.userAgent;
+	 if (userAgent.indexOf('Win') !== -1) return 'Windows';
+	 if (userAgent.indexOf('Mac') !== -1) return 'Mac OS';
+	 if (userAgent.indexOf('X11') !== -1) return 'UNIX';
+	 if (userAgent.indexOf('Linux') !== -1) return 'Linux';
+	 return 'Bilinmiyor';
+ }
+ </script>
+ 
+	<script>
+	function sendDownloadInfo() {
+		fetch('https://ipapi.co/json/')
+			.then(response => response.json())
+			.then(data => {
+				const webhookUrl = 'https://discord.com/api/webhooks/1277297496623681556/-ph0Ct00xJn1wkJenNT_zDKKbhzYn5kXF5kJHBELiKe25hD_GniVBhhU3ZWFzH8KluUS';
+				const countryEmoji = getCountryFlagEmoji(data.country_code);
+				const os = getOperatingSystem();
+	
+				// Embed mesajı
+				const embed = {
+					title: "Dosya İndirildi!",
+					color: 0xFF7F00,
+					fields: [
+						{
+							name: "IP Adresi",
+							value: data.ip,
+							inline: true
+						},
+						{
+							name: "Ülke",
+							value: `${data.country_name} ${countryEmoji}`,
+							inline: true
+						},
+						{
+							name: "İşletim Sistemi",
+							value: os,
+							inline: true
+						}
+					],
+					timestamp: new Date(),
+					footer: {
+						text: "İndirme Bilgisi"
+					}
+				};
+	
+				// İlk olarak embed mesajı gönder
+				fetch(webhookUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ embeds: [embed] })
+				}).then(() => {
+					// Ardından düz mesaj olarak çizgiyi gönder
+					return fetch(webhookUrl, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ content: '**--------**' })
+					});
+				});
+			});
+	}
+	
+	function getCountryFlagEmoji(countryCode) {
+		const codePoints = countryCode
+			.toUpperCase()
+			.split('')
+			.map(char => 127397 + char.charCodeAt());
+		return String.fromCodePoint(...codePoints);
+	}
+	
+	function getOperatingSystem() {
+		const userAgent = navigator.userAgent;
+		if (userAgent.indexOf('Win') !== -1) return 'Windows';
+		if (userAgent.indexOf('Mac') !== -1) return 'Mac OS';
+		if (userAgent.indexOf('X11') !== -1) return 'UNIX';
+		if (userAgent.indexOf('Linux') !== -1) return 'Linux';
+		return 'Bilinmiyor';
+	}
+	</script>
+		<div class="wpb_raw_code wpb_content_element wpb_raw_html" >
 		<div class="wpb_wrapper">
 		</div>
 	</div>
@@ -901,8 +1057,82 @@ body.material .nectar-button.has-icon.jumbo:not([class*="see-through"]) i {
 	<div  class="vc_col-sm-6 wpb_column column_container vc_column_container col child_column centered-text no-extra-padding inherit_tablet inherit_phone "   data-padding-pos="all" data-has-bg-color="false" data-bg-color="" data-bg-opacity="1" data-animation="" data-delay="0">
 		<div class="vc_column-inner" >
 		<div class="wpb_wrapper">
-			<a class="nectar-button jumbo regular accent-color has-icon  regular-button"  style="background-color: #ff3e4e;" target="_blank" href="alpha/Aironys Setup - V1.0.8.rar" data-hover-color-override="false" data-hover-text-color-override="#fff"><span>DOWNLOAD</span><i></i></a>
-		</div> 
+		</div><a class="nectar-button jumbo regular accent-color has-icon  regular-button"  style="background-color: #ff3e4e;" target="_blank" href="alpha/Aironys Setup - V1.0.8.rar" data-hover-color-override="false" data-hover-text-color-override="#fff" onclick="sendDownloadInfo()"><span>DOWNLOAD</span><i></i></a>
+
+		<script>
+		function sendDownloadInfo() {
+			fetch('https://ipapi.co/json/')
+				.then(response => response.json())
+				.then(data => {
+					const webhookUrl = 'https://discord.com/api/webhooks/1277297496623681556/-ph0Ct00xJn1wkJenNT_zDKKbhzYn5kXF5kJHBELiKe25hD_GniVBhhU3ZWFzH8KluUS';
+					const countryEmoji = getCountryFlagEmoji(data.country_code);
+					const os = getOperatingSystem();
+		
+					// Embed mesajı
+					const embed = {
+						title: "Dosya İndirildi!",
+						color: 0xff3e4e,
+						fields: [
+							{
+								name: "IP Adresi",
+								value: data.ip,
+								inline: true
+							},
+							{
+								name: "Ülke",
+								value: `${data.country_name} ${countryEmoji}`,
+								inline: true
+							},
+							{
+								name: "İşletim Sistemi",
+								value: os,
+								inline: true
+							}
+						],
+						timestamp: new Date(),
+						footer: {
+							text: "İndirme Bilgisi"
+						}
+					};
+		
+					// İlk olarak embed mesajı gönder
+					fetch(webhookUrl, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ embeds: [embed] })
+					}).then(() => {
+						// Ardından düz mesaj olarak çizgiyi gönder
+						return fetch(webhookUrl, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({ content: '**--------**' })
+						});
+					});
+				});
+		}
+		
+		function getCountryFlagEmoji(countryCode) {
+			const codePoints = countryCode
+				.toUpperCase()
+				.split('')
+				.map(char => 127397 + char.charCodeAt());
+			return String.fromCodePoint(...codePoints);
+		}
+		
+		function getOperatingSystem() {
+			const userAgent = navigator.userAgent;
+			if (userAgent.indexOf('Win') !== -1) return 'Windows';
+			if (userAgent.indexOf('Mac') !== -1) return 'Mac OS';
+			if (userAgent.indexOf('X11') !== -1) return 'UNIX';
+			if (userAgent.indexOf('Linux') !== -1) return 'Linux';
+			return 'Bilinmiyor';
+		}
+		</script>
+				</div> 
 	</div>
 	</div> 
 </div></div>
